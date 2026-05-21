@@ -12,7 +12,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -90,6 +92,27 @@ class RoutingControllerTest {
     void getRoute_lowercaseOrigin_returns400() throws Exception {
         mockMvc.perform(get("/routing/cze/ITA"))
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists());
+    }
+
+    @Test
+    void unknownPath_returns404WithMessage() throws Exception {
+        mockMvc.perform(get("/unknown/path"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").exists());
+    }
+
+    @Test
+    void postToRoutingEndpoint_returns405WithMessage() throws Exception {
+        mockMvc.perform(post("/routing/CZE/ITA"))
+                .andExpect(status().isMethodNotAllowed())
+                .andExpect(jsonPath("$.message").exists());
+    }
+
+    @Test
+    void deleteToRoutingEndpoint_returns405WithMessage() throws Exception {
+        mockMvc.perform(delete("/routing/CZE/ITA"))
+                .andExpect(status().isMethodNotAllowed())
                 .andExpect(jsonPath("$.message").exists());
     }
 }

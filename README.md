@@ -85,6 +85,14 @@ GET http://localhost:8081/routing/XYZ/ITA
 
 Returns application health status.
 
+### OpenAPI / Swagger
+
+| URL | Description |
+|-----|-------------|
+| `http://localhost:8081/swagger-ui.html` | Interactive Swagger UI |
+| `http://localhost:8081/v3/api-docs` | OpenAPI spec (JSON) |
+| `http://localhost:8081/v3/api-docs.yaml` | OpenAPI spec (YAML) |
+
 ## Running Tests
 
 ```bash
@@ -96,6 +104,13 @@ The test suite includes:
 - **`RoutingServiceTest`** — unit tests for the BFS algorithm using an in-memory graph (no I/O)
 - **`RoutingControllerTest`** — slice test for the REST layer using MockMvc with a mocked service
 - **`CountryGraphServiceTest`** — verifies graph construction from the classpath resource
+- **`RoutingIntegrationTest`** — full Spring Boot integration tests using `TestRestTemplate` against a real application context
+
+To also run Checkstyle and SpotBugs static analysis (bound to the `verify` phase):
+
+```bash
+./mvnw verify
+```
 
 ## Configuration
 
