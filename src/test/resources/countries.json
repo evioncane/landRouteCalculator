@@ -1,0 +1,16 @@
+[
+  {"cca3": "CZE", "borders": ["AUT", "DEU", "POL", "SVK"]},
+  {"cca3": "AUT", "borders": ["CZE", "DEU", "HUN", "ITA", "LIE", "SVK", "SVN", "CHE"]},
+  {"cca3": "ITA", "borders": ["AUT", "FRA", "SMR", "SVN", "VAT", "CHE"]},
+  {"cca3": "DEU", "borders": ["AUT", "BEL", "CZE", "DNK", "FRA", "LUX", "NLD", "POL", "CHE"]},
+  {"cca3": "POL", "borders": ["BLR", "CZE", "DEU", "LTU", "RUS", "SVK", "UKR"]},
+  {"cca3": "SVK", "borders": ["AUT", "CZE", "HUN", "POL", "UKR"]},
+  {"cca3": "HUN", "borders": ["AUT", "HRV", "ROU", "SRB", "SVK", "SVN", "UKR"]},
+  {"cca3": "CHE", "borders": ["AUT", "DEU", "FRA", "ITA", "LIE"]},
+  {"cca3": "FRA", "borders": ["AND", "BEL", "DEU", "ITA", "LUX", "MCO", "ESP", "CHE"]},
+  {"cca3": "ESP", "borders": ["AND", "FRA", "GIB", "PRT", "MAR"]},
+  {"cca3": "PRT", "borders": ["ESP"]},
+  {"cca3": "JPN", "borders": []},
+  {"cca3": "AUS", "borders": []},
+  {"cca3": "NZL", "borders": []}
+]

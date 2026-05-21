@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: land-route-calculator
+  threads:
+    virtual:
+      enabled: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.routing: INFO
