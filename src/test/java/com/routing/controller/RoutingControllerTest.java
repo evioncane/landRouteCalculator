@@ -78,4 +78,18 @@ class RoutingControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Country not found: XYZ"));
     }
+
+    @Test
+    void getRoute_tooLongOrigin_returns400() throws Exception {
+        mockMvc.perform(get("/routing/INVALID/ITA"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists());
+    }
+
+    @Test
+    void getRoute_lowercaseOrigin_returns400() throws Exception {
+        mockMvc.perform(get("/routing/cze/ITA"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").exists());
+    }
 }
