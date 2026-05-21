@@ -2,9 +2,7 @@ services:
   land-route-calculator:
     build: .
     ports:
-      - "8080:8080"
-    environment:
-      - COUNTRIES_DATA_URL=https://raw.githubusercontent.com/mledoze/countries/master/countries.json
+      - "8081:8080"
     restart: on-failure
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health || exit 1"]

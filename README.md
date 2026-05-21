@@ -4,7 +4,7 @@ A Spring Boot service that calculates the shortest land route between any two co
 
 ## How it works
 
-Country border data is fetched from [mledoze/countries](https://raw.githubusercontent.com/mledoze/countries/master/countries.json) once at startup and stored as an in-memory adjacency graph. Route queries are answered with **BFS** (Breadth-First Search), guaranteeing the fewest border crossings — O(V + E) time per query.
+Country border data is bundled as `countries.json` inside the JAR and loaded once at startup into an in-memory adjacency graph. Route queries are answered with **BFS** (Breadth-First Search), guaranteeing the fewest border crossings — O(V + E) time per query.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ Country border data is fetched from [mledoze/countries](https://raw.githubuserco
 docker compose up --build
 ```
 
-The image is built with a multi-stage Dockerfile (Maven builder → JRE runtime). The app starts on port **8080**.
+The image is built with a multi-stage Dockerfile (Maven builder → JRE runtime). The app starts on port **8081**.
 
 ### Option 2 — Maven wrapper
 
@@ -48,7 +48,7 @@ Returns the shortest land route between two countries identified by their [cca3]
 **Success — 200 OK**
 
 ```
-GET /routing/CZE/ITA
+GET http://localhost:8081/routing/CZE/ITA
 ```
 
 ```json
@@ -60,7 +60,7 @@ GET /routing/CZE/ITA
 **No land route — 400 Bad Request**
 
 ```
-GET /routing/JPN/AUS
+GET http://localhost:8081/routing/JPN/AUS
 ```
 
 ```json
@@ -72,7 +72,7 @@ GET /routing/JPN/AUS
 **Unknown country — 400 Bad Request**
 
 ```
-GET /routing/XYZ/ITA
+GET http://localhost:8081/routing/XYZ/ITA
 ```
 
 ```json
@@ -93,22 +93,13 @@ Returns application health status.
 
 The test suite includes:
 
-- **`RoutingServiceTest`** — unit tests for the BFS algorithm using an in-memory graph (no network calls)
+- **`RoutingServiceTest`** — unit tests for the BFS algorithm using an in-memory graph (no I/O)
 - **`RoutingControllerTest`** — slice test for the REST layer using MockMvc with a mocked service
-- **`CountryGraphServiceTest`** — verifies graph construction using `MockRestServiceServer`
+- **`CountryGraphServiceTest`** — verifies graph construction from the classpath resource
 
 ## Configuration
 
-Override defaults via environment variables or `application.yml`:
-
 | Property | Default | Description |
 |----------|---------|-------------|
-| `countries.data.url` | GitHub raw URL | Source for country border data |
-| `server.port` | `8080` | HTTP port |
+| `server.port` | `8080` | HTTP port (mapped to 8081 on the host via Docker) |
 | `spring.threads.virtual.enabled` | `true` | Java 21 virtual threads |
-
-To use a custom data source with Docker:
-
-```bash
-COUNTRIES_DATA_URL=https://my-mirror/countries.json docker compose up
-```
